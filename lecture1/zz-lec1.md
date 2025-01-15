@@ -396,3 +396,9 @@ kubectl rollout history deploy/nginx-deployment
 kubectl rollout undo deploy/nginx-deployment --to-revision=1
 kubectl rollout history deploy/nginx-deployment
 ```
+
+## [참고] k8s resource api 및 단축키 조회 명령어
+```bash
+
+kubectl api-resources
+```

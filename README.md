@@ -1,7 +1,6 @@
 # kubernetes
 
 
-
 ## 주요 실습 내용
 
 1. Single Master Cluster 구성 
@@ -18,7 +17,7 @@
 
 ```
 테스트 소스 : 수정 전
-git remote add origin http://20.39.189.171/platformteam/kubernetes.git
+git remote add origin git@github.com:yeongdeokcho/edu-demo.git
 git branch -M main
 git push -uf origin main
 ```
@@ -34,6 +33,3 @@ IDE 다운로드 및 설치(택 1)
   - 따베쿠 : https://www.youtube.com/playlist?list=PLApuRlvrZKohaBHvXAOhUD-RxD0uQ3z0c
   - 페스트캠퍼스 : 처음 시작하는 Docker & Kubernetes : 컨테이너 환경을 위한 필수 입문 강의 
 ```
-
-# [참고] k8s resource api및 단축키 조회 가능한 명령어
-kubectl api-resources
