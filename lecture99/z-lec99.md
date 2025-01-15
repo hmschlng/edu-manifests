@@ -1,4 +1,4 @@
-# lecture-10 : 실습 과제
+# lecture-99 : 실습 과제
 
 ### 서비스 구성
 ![실습과제](/lecture99/img/lecture10-homework.png)
