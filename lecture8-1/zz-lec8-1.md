@@ -55,7 +55,7 @@
   ![Repository secrets list](/lecture8-1/img/lecture8-1-git-action-secrets.png)
 
 ## 1.2 Workflow 생성 : CI 실행 Job 생성
-- gradle build 워크플로우 참고 : ci.yaml
+- gradle build 워크플로우 : ci.yaml
 ```yaml
 
 ## 워크플로우 이름 정의
@@ -144,7 +144,7 @@ jobs:
   ![Repository secrets list](/lecture8-1/img/lecture8-1-git-act-ci01.png)
 - Workflow 생성 페이지 : github default 템플릿
   ![Repository secrets list](/lecture8-1/img/lecture8-1-git-act-ci02.png)
-- Workflow 생성
+- Workflow 생성 : ci.yaml 파일 복사하여 내용 수정 권장
   ![Repository secrets list](/lecture8-1/img/lecture8-1-git-act-ci-yml.png)
 
 ## 1.3 Workflow 실행 : CI
@@ -157,6 +157,7 @@ jobs:
 - 이미지 레지스트리 push된 이미지 버전 확인 : duckerhub Tag & github kustomization.yaml 내 이미지 Tag
   ![dockerhub 이미지 Tag](/lecture8-1/img/lecture8-1-git-act-docker01.png)
 
+  
 # 2. ArgoCD 설정 : CD
 
 ## 2.1 Application 설정
