@@ -30,8 +30,8 @@ jobs:
 
       - name: '3. Build with Gradle Wrapper'
         run: |
-          ls -al
-          ${{matrix.repo}}/gradlew build
+          cd ${{matrix.repo}}
+          ./gradlew build
 
       - name: '4. Dockerhub login'
         uses: docker/login-action@v1
