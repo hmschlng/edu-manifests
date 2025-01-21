@@ -46,7 +46,7 @@ jobs:
 
       - name: '1-7. Build & Tag Image'
         run: |
-          ls -al
+          cd edu-user
           docker build -t ${{ secrets.DOCKERHUB_LOGIN_SERVER  }}/edu-user:${{ env.VERSION }} -f Dockerfile .
           docker tag ${{ secrets.DOCKERHUB_LOGIN_SERVER  }}/edu-user:${{ env.VERSION }} ${{ env.REPO_ACCOUNT  }}/edu-user:${{ env.VERSION }}
 
