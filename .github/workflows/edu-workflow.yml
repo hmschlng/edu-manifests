@@ -24,7 +24,9 @@ jobs:
           distribution: 'temurin'
 
       - name: '1-3. Build with Gradle Wrapper'
-        run: ls -al
+        run: |
+          cd edu-user
+          ./gradlew build
 
       - name: '1-4. Setup Kustomize'
         uses: imranismail/setup-kustomize@v1
