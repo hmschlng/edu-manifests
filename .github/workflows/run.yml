@@ -31,7 +31,7 @@ jobs:
       - name: '3. Build with Gradle Wrapper'
         run: |
           ls -al
-          ./gradlew build
+          ${{matrix.repo}}/gradlew build
 
       - name: '4. Dockerhub login'
         uses: docker/login-action@v1
@@ -48,9 +48,9 @@ jobs:
 
       - name: '6. Build & Tag Image'
         run: |
-          cd edu-user
-          docker build -t ${{ secrets.DOCKERHUB_LOGIN_SERVER  }}/edu-user:${{ env.VERSION }} -f Dockerfile .
-          docker tag ${{ secrets.DOCKERHUB_LOGIN_SERVER  }}/edu-user:${{ env.VERSION }} ${{ env.REPO_ACCOUNT  }}/edu-user:${{ env.VERSION }}
+          cd ${{matrix.repo}}
+          docker build -t ${{ secrets.DOCKERHUB_LOGIN_SERVER  }}/${{matrix.repo}}:${{ env.VERSION }} -f Dockerfile .
+          docker tag ${{ secrets.DOCKERHUB_LOGIN_SERVER  }}/${{matrix.repo}}:${{ env.VERSION }} ${{ env.REPO_ACCOUNT  }}/${{matrix.repo}}:${{ env.VERSION }}
 
       - name: '7. Push image'
         uses: docker/login-action@v1
