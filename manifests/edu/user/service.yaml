@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: k8s-edu-service
+  name: k8s-user-service
+  namespace: edu-user
 spec:
   selector:
-    app: k8s-edu-app
+    app: k8s-user-app
     version: blue  # 기본적으로 Blue 배포에 연결
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8080                        # deployment에서 설정한 컨테이너 포트 매핑
+      targetPort: 8080   

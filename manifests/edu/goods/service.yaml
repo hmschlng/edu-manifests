@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: k8s-good-service
+  namespace: edu-goods
+spec:
+  selector:
+    app: k8s-good-app
+    version: blue  # 기본적으로 Blue 배포에 연결
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080 
