@@ -16,7 +16,7 @@ jobs:
     outputs:
       VERSION: ${{ steps.gen-version.outputs.VERSION }}
     steps:
-    - name: '5. Gen Version'
+    - name: '1. Gen Version'
       id: gen-version
       run: |
         export TZ=Asia/Seoul
@@ -32,6 +32,9 @@ jobs:
         repo: ${{ fromJson(github.event.inputs.REPO_LIST) }}
 
     steps:
+      - name: 'Use Version'
+        run: echo "Using version ${{ needs.gen-version.outputs.VERSION }}"
+    
       - name: '1. Checkout Service Repository'
         uses: actions/checkout@v4
         with:
@@ -60,9 +63,9 @@ jobs:
       - name: '6. Build & Tag Image'
         run: |
           cd ${{matrix.repo}}
-          echo "This version is ${{env.VERSION}}"
-          docker build -t ${{ secrets.DOCKERHUB_LOGIN_SERVER  }}/${{matrix.repo}}:${{ env.VERSION }} -f Dockerfile .
-          docker tag ${{ secrets.DOCKERHUB_LOGIN_SERVER  }}/${{matrix.repo}}:${{ env.VERSION }} ${{ env.REPO_ACCOUNT  }}/${{matrix.repo}}:${{ env.VERSION }}
+          echo "This version is ${{ needs.gen-version.outputs.VERSION }}"
+          docker build -t ${{ secrets.DOCKERHUB_LOGIN_SERVER  }}/${{matrix.repo}}:${{ needs.gen-version.outputs.VERSION }} -f Dockerfile .
+          docker tag ${{ secrets.DOCKERHUB_LOGIN_SERVER  }}/${{matrix.repo}}:${{ needs.gen-version.outputs.VERSION }} ${{ env.REPO_ACCOUNT  }}/${{matrix.repo}}:${{ needs.gen-version.outputs.VERSION }}
 
       - name: '7. Push image'
         uses: docker/login-action@v1
@@ -107,8 +110,8 @@ jobs:
           cd edu-manifests/manifests
           for repo in ${{ join(fromJson(github.event.inputs.REPO_LIST), ' ') }}
           do
-            kustomize edit set image ${{ env.REPO_ACCOUNT }}/$repo:${{env.VERSION}}
-            echo "Updated kustomization.yaml for ${{env.VERSION}}:"
+            kustomize edit set image ${{ env.REPO_ACCOUNT }}/$repo:${{ needs.gen-version.outputs.VERSION }}
+            echo "Updated kustomization.yaml for ${{ needs.gen-version.outputs.VERSION }}:"
             cat kustomization.yaml
           done
       
@@ -121,7 +124,7 @@ jobs:
           git fetch origin main
           git merge origin/main --no-edit
           git add .
-          git commit -am "Update image tag for ${{ matrix.repo }}:${{ env.VERSION }}"
+          git commit -am "Update image tag for ${{ matrix.repo }}:${{ needs.gen-version.outputs.VERSION }}"
           git push -u origin main
           
       # - name: '5. Release push lock' # 작업 완료 후 lock 해제제
