@@ -100,6 +100,7 @@ jobs:
           do
             FULL_IMAGE_NAME="${{ env.REPO_ACCOUNT }}/$repo:${{ env.VERSION }}"
             kustomize edit set image ${{ env.REPO_ACCOUNT }}/$repo=$FULL_IMAGE_NAME
+            sed -i "/name: ${{ env.REPO_ACCOUNT }}\/$repo/,/newTag/c\- name: ${{ env.REPO_ACCOUNT }}/$repo\n  newTag: ${{ env.VERSION }}" kustomization.yaml
             echo "Updated kustomization.yaml for $repo:"
             cat kustomization.yaml
           done
