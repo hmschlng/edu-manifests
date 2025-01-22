@@ -21,6 +21,7 @@ jobs:
         echo "VERSION=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
         
   run-ci:
+    needs: gen-version
     runs-on: ubuntu-latest
     strategy:
       matrix:
