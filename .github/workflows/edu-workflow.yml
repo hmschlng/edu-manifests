@@ -103,6 +103,7 @@ jobs:
             cat temp.txt
             kustomize edit set image $FULL_IMAGE_NAME
             cat kustomization.yaml
+          done
       
       - name: '4. Commit files'
         run: |
