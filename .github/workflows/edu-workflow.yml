@@ -58,3 +58,6 @@ jobs:
           login-server: ${{ secrets.DOCKERHUB_LOGIN_SERVER  }}
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - run: |
+          docker push ${{env.REPO_ACCOUNT}}/${{matrix.repo}}:${{env.VERSION}}
