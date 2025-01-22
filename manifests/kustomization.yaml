@@ -5,6 +5,6 @@ resources:
 - ./edu/goods
 images:
 - name: hmschlng/edu-goods
-  newTag: "202501221537"
+  newTag: "202501221558"
 - name: hmschlng/edu-user
-  newTag: "202501221537"
+  newTag: "202501221558"
