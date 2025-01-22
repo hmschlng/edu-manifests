@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: external-api-config
-  namespace: edu-user
-data:
-  api.url: http://k8s-good-service.edu-goods.svc.cluster.local:80/api/v1/goods/
