@@ -122,8 +122,8 @@ jobs:
           do
             kustomize edit set image ${{ env.REPO_ACCOUNT }}/$repo:${{ env.VERSION }}
             echo "Updated kustomization.yaml for ${{ env.VERSION }}:"
-            cat kustomization.yaml
           done
+          cat kustomization.yaml
           
       - name: '4. Commit files'
         run: |
