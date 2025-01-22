@@ -126,13 +126,6 @@ jobs:
             cat kustomization.yaml
           done
           
-      - name: '4. Kustomize Build Test'
-        run: |
-          ls -al
-          cd edu-manifests/manifests/base
-          pwd
-          kustomize build .
-          
       - name: '4. Commit files'
         run: |
           cd edu-manifests/manifests/base
