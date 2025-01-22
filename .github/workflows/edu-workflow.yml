@@ -72,12 +72,19 @@ jobs:
         repo: ${{ fromJson(github.event.inputs.REPO_LIST) }}
         
     steps:
+      - name: '0. Acquire Git Push Lock'   # 동시 git push 방지를 위해 lock 설정 
+        uses: softprops/turnstile@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
       - name: '1. Checkout Manifest Repository'
         uses: actions/checkout@v4
         with:
           repository: ${{env.REPO_ACCOUNT}}/edu-manifests
           path: edu-manifests
           token: ${{secrets.REPO_TOKEN}}
+          fetch-depth: 0
+          ref: main
 
       - name: '2. Setup Kustomize'              
         uses: imranismail/setup-kustomize@v1  
@@ -96,5 +103,14 @@ jobs:
           ls -al
           git config --global user.email "github-actions@github.com"
           git config --global user.name "github-actions"
-          git commit -am "Update image tag"
+          git fetch origin main
+          git merge origin/main --no-edit
+          git add .
+          git commit -am "Update image tag for ${{ matrix.repo }}"
           git push -u origin main
+          
+      - name: '5. Release push lock' # 작업 완료 후 lock 해제제
+        if: always()
+        uses: softprops/turnstile@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
