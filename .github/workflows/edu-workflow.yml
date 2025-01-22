@@ -67,9 +67,6 @@ jobs:
   update-manifest:
     needs: run-ci            # 작업 순서 정의
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        repo: ${{ fromJson(github.event.inputs.REPO_LIST) }}
         
     steps:
       # - name: '0. Acquire Git Push Lock'   # 동시 git push 방지를 위해 lock 설정 
