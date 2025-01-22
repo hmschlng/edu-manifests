@@ -11,3 +11,5 @@ resources:
 - ./edu/goods/service.yaml
 - ./edu/goods/hpa.yaml
 images:
+- name: hmschlng/edu-goods
+- name: hmschlng/edu-user
