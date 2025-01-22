@@ -2,10 +2,12 @@ name: Edu Service CI
 
 on:
   workflow_dispatch:
-
+    inputs:
+      REPO_LIST:
+        description: 'JSON array of repositories to process'
+        default: '["edu-user", "edu-goods"]'
 env:
   REPO_ACCOUNT: hmschlng
-  REPO_LIST: '["edu-user", "edu-goods"]'
   JAVA_VERSION: 17
 
 jobs:
@@ -13,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        repo: ${{ fromJson(env.REPO_LIST) }}
+        repo: ${{ fromJson(github.event.inputs.REPO_LIST) }}
 
     steps:
       - name: '1. Checkout Service Repository'
@@ -67,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        repo: ${{ fromJson(env.REPO_LIST) }}
+        repo: ${{ fromJson(github.event.inputs.REPO_LIST) }}
         
     steps:
       - name: '1. Checkout Manifest Repository'
@@ -77,10 +79,10 @@ jobs:
           path: edu-manifests
           token: ${{secrets.REPO_TOKEN}}
 
-      - name: '8. Setup Kustomize'              
+      - name: '2. Setup Kustomize'              
         uses: imranismail/setup-kustomize@v1  
         
-      - name: '9. Update Kubernetes resources'
+      - name: '3. Update Kubernetes resources'
         run: |
           cd edu-manifests/manifests        
           ls -al
@@ -88,7 +90,7 @@ jobs:
           kustomize edit set image ${{ env.REPO_ACCOUNT }}/${{ matrix.repo }}:${{ env.VERSION }}
           cat kustomization.yaml
       
-      - name: '10. Commit files'
+      - name: '4. Commit files'
         run: |
           cd edu-manifests/manifests  
           ls -al
