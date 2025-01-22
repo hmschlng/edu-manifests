@@ -12,3 +12,4 @@ resources:
 - ./edu/goods/hpa.yaml
 images:
 - name: hmschlng/
+- name: hmschlng/edu-goods
