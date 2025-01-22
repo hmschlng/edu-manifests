@@ -73,7 +73,7 @@ jobs:
         
       - name: '9. Update Kubernetes resources'
         run: |
-          echo "`ls`"
+          ls -al
           cd manifests        
           kustomize edit set image ${{ env.REPO_ACCOUNT }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
           cat kustomization.yaml
