@@ -80,8 +80,8 @@ jobs:
       
       - name: '10. Commit files'
         run: |
-          cd manifests
-          echo "`ls`"
+          cd edu-manifests/manifests  
+          ls -al
           git config --global user.email "github-actions@github.com"
           git config --global user.name "github-actions"
           git commit -am "Update image tag"
