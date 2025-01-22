@@ -102,35 +102,22 @@ jobs:
         run: |
           echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
           echo "Using version ${{ env.VERSION }}"
-          ls -al
-    
-      # - name: '0. Acquire Git Push Lock'   # 동시 git push 방지를 위해 lock 설정 
-      #   uses: softprops/turnstyle@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-      # - name: '1. Checkout Manifest Repository'
-      #   uses: actions/checkout@v4
-      #   with:
-      #     repository: ${{env.REPO_ACCOUNT}}/edu-manifests
-      #     path: edu-manifests
-      #     token: ${{secrets.REPO_TOKEN}}
-      #     fetch-depth: 0
-      #     ref: main
+      - name: '1. Checkout Manifest Repository'
+        uses: actions/checkout@v4
+        with:
+          repository: ${{env.REPO_ACCOUNT}}/edu-manifests
+          path: edu-manifests
+          token: ${{secrets.REPO_TOKEN}}
+          fetch-depth: 0
+          ref: main
 
       - name: '2. Setup Kustomize'              
         uses: imranismail/setup-kustomize@v1  
         
-      # - name: '3. Update Kubernetes resources'
-      #   run: |
-      #     cd edu-manifests/manifests        
-      #     ls -al
-      #     FULL_IMAGE_NAME="${{ env.REPO_ACCOUNT }}/${{ matrix.repo }}:${{ env.VERSION }}"
-      #     kustomize edit set image $FULL_IMAGE_NAME
-      #     cat kustomization.yaml
       - name: '3. Update Kubernetes resources'
         run: |
-          cd manifests
+          cd edu-manifests/manifests/overlays/prod
           for repo in ${{ join(fromJson(github.event.inputs.REPO_LIST), ' ') }}
           do
             kustomize edit set image ${{ env.REPO_ACCOUNT }}/$repo:${{ env.VERSION }}
@@ -140,12 +127,12 @@ jobs:
           
       - name: '4. Kustomize Build Test'
         run: |
-          cd manifests
+          cd edu-manifests/manifests/overlays/prod
           kustomize build .
           
       - name: '4. Commit files'
         run: |
-          cd manifests
+          cd edu-manifests/manifests/overlays/prod
           ls -al
           git config --global user.email "github-actions@github.com"
           git config --global user.name "github-actions"
