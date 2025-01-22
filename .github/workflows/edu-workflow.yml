@@ -11,6 +11,15 @@ env:
   JAVA_VERSION: 17
 
 jobs:
+  gen-version:
+    runs-on: ubuntu-latest
+    steps:
+    - name: '5. Gen Version'
+      id: gen-version
+      run: |
+        export TZ=Asia/Seoul
+        echo "VERSION=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+        
   run-ci:
     runs-on: ubuntu-latest
     strategy:
@@ -42,12 +51,6 @@ jobs:
           login-server: ${{ secrets.DOCKERHUB_LOGIN_SERVER }}
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
-      - name: '5. Gen Version'
-        id: gen-version
-        run: |
-          export TZ=Asia/Seoul
-          echo "VERSION=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
 
       - name: '6. Build & Tag Image'
         run: |
