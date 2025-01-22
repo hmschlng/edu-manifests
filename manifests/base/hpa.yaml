@@ -7,7 +7,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: edu-user-deployment
+    name: edu-user-prod
   minReplicas: 2
   maxReplicas: 4
   metrics:
@@ -28,7 +28,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: edu-goods-deployment
+    name: edu-goods-prod
   minReplicas: 2
   maxReplicas: 3
   metrics:
