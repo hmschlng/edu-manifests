@@ -73,7 +73,7 @@ jobs:
         
     steps:
       - name: '0. Acquire Git Push Lock'   # 동시 git push 방지를 위해 lock 설정 
-        uses: softprops/turnstile@v1
+        uses: softprops/turnstyle@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
@@ -111,6 +111,6 @@ jobs:
           
       - name: '5. Release push lock' # 작업 완료 후 lock 해제제
         if: always()
-        uses: softprops/turnstile@v1
+        uses: softprops/turnstyle@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
