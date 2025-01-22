@@ -9,18 +9,21 @@ on:
 env:
   REPO_ACCOUNT: hmschlng
   JAVA_VERSION: 17
-  VERSION: ${{ needs.gen-version.outputs.VERSION }}
+  VERSION: ${{ steps.gen-version.outputs.VERSION }}
 
 jobs:
   gen-version:
     runs-on: ubuntu-latest
+    outputs:
+      VERSION: ${{ steps.gen-version.outputs.VERSION }}
     steps:
     - name: '5. Gen Version'
       id: gen-version
       run: |
         export TZ=Asia/Seoul
-        echo "VERSION=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
-        echo "This version is ${{ steps.gen-version.outputs.VERSION }}"
+        VERSION=$(date +%Y%m%d%H%M)
+        echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+        echo "This version is $VERSION"
         
   run-ci:
     needs: gen-version
