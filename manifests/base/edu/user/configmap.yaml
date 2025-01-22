@@ -4,4 +4,4 @@ metadata:
   name: external-api-config
   namespace: edu-user
 data:
-  api.url: http://edu-goods-service.edu-goods-prod.svc.cluster.local:80/api/v1/goods/
+  api.url: http://edu-goods-service.edu-goods.svc.cluster.local:80/api/v1/goods/
