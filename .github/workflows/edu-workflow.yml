@@ -19,6 +19,7 @@ jobs:
       run: |
         export TZ=Asia/Seoul
         echo "VERSION=$(date +%Y%m%d%H%M)" >> $GITHUB_ENV
+        echo "This version is ${{env.VERSION}}"
         
   run-ci:
     needs: gen-version
@@ -56,6 +57,7 @@ jobs:
       - name: '6. Build & Tag Image'
         run: |
           cd ${{matrix.repo}}
+          echo "This version is ${{env.VERSION}}"
           docker build -t ${{ secrets.DOCKERHUB_LOGIN_SERVER  }}/${{matrix.repo}}:${{ env.VERSION }} -f Dockerfile .
           docker tag ${{ secrets.DOCKERHUB_LOGIN_SERVER  }}/${{matrix.repo}}:${{ env.VERSION }} ${{ env.REPO_ACCOUNT  }}/${{matrix.repo}}:${{ env.VERSION }}
 
