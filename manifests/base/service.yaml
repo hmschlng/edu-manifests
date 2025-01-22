@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: k8s-user-service
+  name: edu-user-service
   namespace: edu-user
 spec:
   selector:
-    app: k8s-user-app
+    app: edu-user-prod
     version: blue  # 기본적으로 Blue 배포에 연결
   ports:
     - protocol: TCP
@@ -16,11 +16,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: k8s-goods-service
+  name: edu-goods-service
   namespace: edu-goods
 spec:
   selector:
-    app: k8s-goods-app
+    app: edu-goods-app
     version: blue  # 기본적으로 Blue 배포에 연결
   ports:
     - protocol: TCP
