@@ -13,3 +13,4 @@ resources:
 images:
 - name: hmschlng/
 - name: hmschlng/edu-goods
+- name: hmschlng/edu-user
