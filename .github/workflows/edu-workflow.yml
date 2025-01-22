@@ -22,6 +22,15 @@ jobs:
         echo "VERSION=$VERSION" >> $GITHUB_ENV
         echo "This version is $VERSION"
         
+    - name: '2. Create version.txt'
+      run: echo "${{ env.VERSION }}" > version.txt
+      
+    - name: '3. Upload version.txt'
+      uses: actions/upload-artifact@v2
+      with:
+        name: version
+        path: version.txt
+        
   run-ci:
     needs: gen-version
     runs-on: ubuntu-latest
@@ -30,8 +39,14 @@ jobs:
         repo: ${{ fromJson(github.event.inputs.REPO_LIST) }}
 
     steps:
-      - name: 'Use Version'
-        run: echo "Using version ${{ env.VERSION }}"
+      - name: 'Download version.txt'
+        uses: actions/download-artifact@v2
+        with:
+          name: version
+      - name: 'Set VERSION env variable'
+        run: |
+          echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
+          echo "Using version ${{ env.VERSION }}"
     
       - name: '1. Checkout Service Repository'
         uses: actions/checkout@v4
@@ -79,8 +94,15 @@ jobs:
     runs-on: ubuntu-latest
         
     steps:
-      - name: 'Use Version'
-        run: echo "Using version ${{ env.VERSION }}"
+      - name: 'Download version.txt'
+        uses: actions/download-artifact@v2
+        with:
+          name: version
+      - name: 'Set VERSION env variable'
+        run: |
+          echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
+          echo "Using version ${{ env.VERSION }}"
+    
       # - name: '0. Acquire Git Push Lock'   # 동시 git push 방지를 위해 lock 설정 
       #   uses: softprops/turnstyle@v1
       #   env:
