@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: edu-user-app
-          image: hmschlng/edu-user:v0.0.1      # dockerhub image repository : repo/image명:Tag
+          image: hmschlng/edu-user      # dockerhub image repository : repo/image명:Tag
           imagePullPolicy: Always        # k8s 클러스터에 다운로드 된 이미지 없으면 다운 or Always
           ports:
             - name: http
