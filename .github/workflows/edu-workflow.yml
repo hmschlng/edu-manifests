@@ -26,7 +26,7 @@ jobs:
       run: echo "${{ env.VERSION }}" > version.txt
       
     - name: '3. Upload version.txt'
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: version
         path: version.txt
@@ -40,7 +40,7 @@ jobs:
 
     steps:
       - name: 'Download version.txt'
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: version
       - name: 'Set VERSION env variable'
@@ -95,7 +95,7 @@ jobs:
         
     steps:
       - name: 'Download version.txt'
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: version
       - name: 'Set VERSION env variable'
