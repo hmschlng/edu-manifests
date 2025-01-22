@@ -7,15 +7,14 @@ spec:
   selector:
     matchLabels:
       app: edu-user-app
-  replicas: 2
   template:
     metadata:
       labels:
-        app: k8s-edu-app
+        app: edu-user-app
         version: blue
     spec:
       containers:
-        - name: k8s-edu-app
+        - name: edu-user-app
           image: hmschlng/edu-user:v0.0.1      # dockerhub image repository : repo/image명:Tag
           imagePullPolicy: Always        # k8s 클러스터에 다운로드 된 이미지 없으면 다운 or Always
           ports:
