@@ -58,6 +58,31 @@ jobs:
           login-server: ${{ secrets.DOCKERHUB_LOGIN_SERVER  }}
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
       - run: |
           docker push ${{env.REPO_ACCOUNT}}/${{matrix.repo}}:${{env.VERSION}}
+
+      - name: '1. Checkout Manifest Repository'
+        uses: actions/checkout@v4
+        with:
+          repository: ${{env.REPO_ACCOUNT}}/edu-manifests
+          path: edu-manifests
+          token: ${{secrets.REPO_TOKEN}}
+
+      - name: '8. Setup Kustomize'              
+        uses: imranismail/setup-kustomize@v1  
+        
+      - name: '9. Update Kubernetes resources'
+        run: |
+          echo "`ls`"
+          cd manifests        
+          kustomize edit set image ${{ env.REPO_ACCOUNT }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+          cat kustomization.yaml
+      
+      - name: '10. Commit files'
+        run: |
+          cd manifests
+          echo "`ls`"
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "github-actions"
+          git commit -am "Update image tag"
+          git push -u origin main
