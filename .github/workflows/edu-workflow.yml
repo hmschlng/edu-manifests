@@ -72,10 +72,10 @@ jobs:
         repo: ${{ fromJson(github.event.inputs.REPO_LIST) }}
         
     steps:
-      - name: '0. Acquire Git Push Lock'   # 동시 git push 방지를 위해 lock 설정 
-        uses: softprops/turnstyle@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: '0. Acquire Git Push Lock'   # 동시 git push 방지를 위해 lock 설정 
+      #   uses: softprops/turnstyle@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: '1. Checkout Manifest Repository'
         uses: actions/checkout@v4
@@ -89,13 +89,23 @@ jobs:
       - name: '2. Setup Kustomize'              
         uses: imranismail/setup-kustomize@v1  
         
+      # - name: '3. Update Kubernetes resources'
+      #   run: |
+      #     cd edu-manifests/manifests        
+      #     ls -al
+      #     FULL_IMAGE_NAME="${{ env.REPO_ACCOUNT }}/${{ matrix.repo }}:${{ env.VERSION }}"
+      #     kustomize edit set image $FULL_IMAGE_NAME
+      #     cat kustomization.yaml
       - name: '3. Update Kubernetes resources'
         run: |
-          cd edu-manifests/manifests        
-          ls -al
-          FULL_IMAGE_NAME="${{ env.REPO_ACCOUNT }}/${{ matrix.repo }}:${{ env.VERSION }}"
-          kustomize edit set image $FULL_IMAGE_NAME
-          cat kustomization.yaml
+          cd edu-manifests/manifests
+          for repo in ${{ join(fromJson(github.event.inputs.REPO_LIST), ' ') }}
+          do
+            FULL_IMAGE_NAME="${{ env.REPO_ACCOUNT }}/$repo:${{ env.VERSION }}"
+            cat $FULL_IMAGE_NAME > temp.txt
+            cat temp.txt
+            kustomize edit set image $FULL_IMAGE_NAME
+            cat kustomization.yaml
       
       - name: '4. Commit files'
         run: |
@@ -106,11 +116,11 @@ jobs:
           git fetch origin main
           git merge origin/main --no-edit
           git add .
-          git commit -am "Update image tag for ${{ matrix.repo }}"
+          git commit -am "Update image tag for ${{ matrix.repo }}:${{ env.VERSION }}"
           git push -u origin main
           
-      - name: '5. Release push lock' # 작업 완료 후 lock 해제제
-        if: always()
-        uses: softprops/turnstyle@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: '5. Release push lock' # 작업 완료 후 lock 해제제
+      #   if: always()
+      #   uses: softprops/turnstyle@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
