@@ -117,7 +117,8 @@ jobs:
         
       - name: '3. Update Kubernetes resources'
         run: |
-          cd edu-manifests/manifests/overlays/prod
+          ls -R
+          cd edu-manifests/manifests/base
           for repo in ${{ join(fromJson(github.event.inputs.REPO_LIST), ' ') }}
           do
             kustomize edit set image ${{ env.REPO_ACCOUNT }}/$repo:${{ env.VERSION }}
@@ -127,12 +128,14 @@ jobs:
           
       - name: '4. Kustomize Build Test'
         run: |
-          cd edu-manifests/manifests/overlays/prod
+          ls -al
+          cd edu-manifests/manifests/base
+          pwd
           kustomize build .
           
       - name: '4. Commit files'
         run: |
-          cd edu-manifests/manifests/overlays/prod
+          cd edu-manifests/manifests/base
           ls -al
           git config --global user.email "github-actions@github.com"
           git config --global user.name "github-actions"
