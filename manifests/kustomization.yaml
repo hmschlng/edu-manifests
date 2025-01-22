@@ -12,4 +12,6 @@ resources:
 - ./edu/goods/hpa.yaml
 images:
 - name: hmschlng/edu-goods
+  newTag: "202501221537"
 - name: hmschlng/edu-user
+  newTag: "202501221537"
