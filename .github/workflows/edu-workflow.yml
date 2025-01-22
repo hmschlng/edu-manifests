@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        repo: ${{fromJson(env.REPO_LIST)}}
+        repo: ${{ fromJson(${{ env.REPO_LIST }}) }}
 
     steps:
       - name: '1. Checkout Service Repository'
@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        repo: ${{fromJson(env.REPO_LIST)}}
+        repo: ${{ fromJson(${{ env.REPO_LIST }}) }}
         
     steps:
       - name: '1. Checkout Manifest Repository'
