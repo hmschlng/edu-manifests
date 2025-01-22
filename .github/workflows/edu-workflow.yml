@@ -9,7 +9,6 @@ on:
 env:
   REPO_ACCOUNT: hmschlng
   JAVA_VERSION: 17
-  VERSION: ${{ steps.gen-version.outputs.VERSION }}
 
 jobs:
   gen-version:
