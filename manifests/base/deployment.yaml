@@ -1,6 +1,45 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: edu-user-prod
+  namespace: edu-user
+spec:
+  selector:
+    matchLabels:
+      app: edu-user-app
+  template:
+    metadata:
+      labels:
+        app: edu-user-app
+        version: blue
+    spec:
+      containers:
+        - name: edu-user-app
+          image: hmschlng/edu-user      # dockerhub image repository : repo/image명:Tag
+          imagePullPolicy: Always        # k8s 클러스터에 다운로드 된 이미지 없으면 다운 or Always
+          ports:
+            - name: http
+              containerPort: 8080              # demo.jar 실행 포트
+              protocol: TCP
+          resources:                           # pod 사용 리소스 설정 블록
+            requests:                          # 생성시 필요한 최소 리소스
+              cpu: "1"
+              memory: "2Gi"
+            limits:                            # pod가 사용 가능한 최대 리소스
+              cpu: "1"
+              memory: "2Gi"
+          env:                                 # pod 내 환경 변수 설정
+            - name: SPRING_PROFILES_ACTIVE     # spring profile 설정
+              value: prod                      # 상용(prod) 환경
+      imagePullSecrets:                        # dockerhub 이미지 pull 위한 secret
+        - name: k8s-edu-dockerhub-secret
+      nodeSelector:                            # pod가 실행 될 node 설정
+        kubernetes.io/hostname: worker01
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: edu-goods-prod
   namespace: edu-goods
 spec:
@@ -35,5 +74,3 @@ spec:
         - name: k8s-edu-dockerhub-secret
       nodeSelector:                            # pod가 실행 될 node 설정
         kubernetes.io/hostname: worker01
-
----

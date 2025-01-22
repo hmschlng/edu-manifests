@@ -1,13 +1,13 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: k8s-good-hpa
+  name: k8s-goods-hpa
   namespace: edu-goods
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: k8s-good-deployment
+    name: k8s-goods-deployment
   minReplicas: 2
   maxReplicas: 3
   metrics:
