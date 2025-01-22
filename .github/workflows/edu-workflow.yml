@@ -99,8 +99,6 @@ jobs:
           for repo in ${{ join(fromJson(github.event.inputs.REPO_LIST), ' ') }}
           do
             FULL_IMAGE_NAME="${{ env.REPO_ACCOUNT }}/$repo:${{ env.VERSION }}"
-            cat $FULL_IMAGE_NAME > temp.txt
-            cat temp.txt
             kustomize edit set image $FULL_IMAGE_NAME
             cat kustomization.yaml
           done
