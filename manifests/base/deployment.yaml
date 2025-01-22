@@ -31,6 +31,12 @@ spec:
           env:                                 # pod 내 환경 변수 설정
             - name: SPRING_PROFILES_ACTIVE     # spring profile 설정
               value: prod                      # 상용(prod) 환경
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
       imagePullSecrets:                        # dockerhub 이미지 pull 위한 secret
         - name: k8s-edu-dockerhub-secret
       nodeSelector:                            # pod가 실행 될 node 설정
@@ -54,7 +60,7 @@ spec:
     spec:
       containers:
         - name: edu-goods-app
-          image: hmschlng/edu-goods      # dockerhub image repository : repo/image명:Tag
+          image: hmschlng/edu-goods            # dockerhub image repository : repo/image명:Tag
           imagePullPolicy: IfNotPresent        # k8s 클러스터에 다운로드 된 이미지 없으면 다운 or Always
           ports:
             - name: http
@@ -70,6 +76,12 @@ spec:
           env:                                 # pod 내 환경 변수 설정
             - name: SPRING_PROFILES_ACTIVE     # spring profile 설정
               value: prod                      # 상용(prod) 환경
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
       imagePullSecrets:                        # dockerhub 이미지 pull 위한 secret
         - name: k8s-edu-dockerhub-secret
       nodeSelector:                            # pod가 실행 될 node 설정
