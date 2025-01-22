@@ -93,8 +93,8 @@ jobs:
         run: |
           cd edu-manifests/manifests        
           ls -al
-          echo ### ${{ env.REPO_ACCOUNT }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
-          kustomize edit set image ${{ env.REPO_ACCOUNT }}/${{ matrix.repo }}:${{ env.VERSION }}
+          FULL_IMAGE_NAME="${{ env.REPO_ACCOUNT }}/${{ matrix.repo }}:${{ env.VERSION }}"
+          kustomize edit set image $FULL_IMAGE_NAME
           cat kustomization.yaml
       
       - name: '4. Commit files'
