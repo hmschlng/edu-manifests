@@ -117,7 +117,6 @@ jobs:
         
       - name: '3. Update Kubernetes resources'
         run: |
-          ls -R
           cd edu-manifests/manifests/base
           for repo in ${{ join(fromJson(github.event.inputs.REPO_LIST), ' ') }}
           do
@@ -137,9 +136,3 @@ jobs:
           git add .
           git commit -am "Update image tag for ${{ matrix.repo }}:${{ env.VERSION }}}"
           git push -u origin main
-          
-      # - name: '5. Release push lock' # 작업 완료 후 lock 해제제
-      #   if: always()
-      #   uses: softprops/turnstyle@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
