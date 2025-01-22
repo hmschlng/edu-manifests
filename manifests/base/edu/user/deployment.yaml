@@ -33,7 +33,7 @@ spec:
               value: prod                      # 상용(prod) 환경
           livenessProbe:
             httpGet:
-              path: /
+              path: /healthcheck
               port: 8080
             initialDelaySeconds: 10
             periodSeconds: 5
