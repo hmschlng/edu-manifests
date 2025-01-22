@@ -102,6 +102,7 @@ jobs:
         run: |
           echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
           echo "Using version ${{ env.VERSION }}"
+          ls -al
     
       # - name: '0. Acquire Git Push Lock'   # 동시 git push 방지를 위해 lock 설정 
       #   uses: softprops/turnstyle@v1
