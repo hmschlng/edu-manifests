@@ -5,6 +5,7 @@ on:
 
 env:
   REPO_ACCOUNT: hmschlng
+  REPO_LIST: '["edu-user", "edu-goods"]'
   JAVA_VERSION: 17
 
 jobs:
@@ -12,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        repo: ['edu-user', 'edu-goods']
+        repo: ${{fromJson(env.REPO_LIST)}}
 
     steps:
       - name: '1. Checkout Service Repository'
@@ -64,6 +65,10 @@ jobs:
   update-manifest:
     needs: run-ci            # 작업 순서 정의
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repo: ${{fromJson(env.REPO_LIST)}}
+        
     steps:
       - name: '1. Checkout Manifest Repository'
         uses: actions/checkout@v4
@@ -80,7 +85,7 @@ jobs:
           cd edu-manifests/manifests        
           ls -al
           echo ### ${{ env.REPO_ACCOUNT }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
-          kustomize edit set image ${{ env.REPO_ACCOUNT }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+          kustomize edit set image ${{ env.REPO_ACCOUNT }}/${{ matrix.repo }}:${{ env.VERSION }}
           cat kustomization.yaml
       
       - name: '10. Commit files'
