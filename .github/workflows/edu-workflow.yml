@@ -136,7 +136,7 @@ jobs:
             echo "Updated kustomization.yaml for ${{ env.VERSION }}:"
             cat kustomization.yaml
           done
-      
+          kustomize build . | cat
       - name: '4. Commit files'
         run: |
           cd edu-manifests/manifests  
