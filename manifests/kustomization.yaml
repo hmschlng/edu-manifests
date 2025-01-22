@@ -10,8 +10,4 @@ resources:
 - ./edu/goods/ingress.yaml
 - ./edu/goods/service.yaml
 - ./edu/goods/hpa.yaml
-images:
-- name: hmschlng/edu-goods
-  newName: hmschlng/edu-goods
-- name: hmschlng/edu-user
-  newName: hmschlng/edu-user
+
