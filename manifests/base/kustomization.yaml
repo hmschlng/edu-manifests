@@ -1,11 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
 resources:
 - ./edu/goods/deployment.yaml
 - ./edu/goods/ingress.yaml
 - ./edu/goods/service.yaml
 - ./edu/goods/hpa.yaml
-
 - ./edu/user/deployment.yaml
 - ./edu/user/ingress.yaml
 - ./edu/user/service.yaml
@@ -14,6 +14,6 @@ resources:
 
 images:
 - name: hmschlng/edu-goods
-  newTag: "202501230349"
+  newTag: "202501230739"
 - name: hmschlng/edu-user
-  newTag: "202501230349"
+  newTag: "202501230739"
