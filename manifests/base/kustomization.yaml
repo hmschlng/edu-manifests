@@ -1,8 +1,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- ./edu/goods/*.yaml
-- ./edu/user/*.yaml
+- ./edu/goods/deployment.yaml
+- ./edu/goods/ingress.yaml
+- ./edu/goods/service.yaml
+- ./edu/goods/hpa.yaml
+
+- ./edu/user/deployment.yaml
+- ./edu/user/ingress.yaml
+- ./edu/user/service.yaml
+- ./edu/user/hpa.yaml
+- ./edu/user/configmap.yaml
 
 images:
 - name: hmschlng/edu-goods
