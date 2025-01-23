@@ -14,6 +14,6 @@ resources:
 
 images:
 - name: hmschlng/edu-goods
-  newTag: "202501231042"
+  newTag: "202501231126"
 - name: hmschlng/edu-user
-  newTag: "202501231042"
+  newTag: "202501231126"
