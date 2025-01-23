@@ -13,6 +13,7 @@ spec:
         app: edu-user-app
         version: blue
     spec:
+      serviceAccountName: edu-user-sa
       containers:
         - name: edu-user-app
           image: hmschlng/edu-user      # dockerhub image repository : repo/image명:Tag
@@ -41,3 +42,36 @@ spec:
         - name: k8s-edu-dockerhub-secret
       nodeSelector:                            # pod가 실행 될 node 설정
         kubernetes.io/hostname: worker01
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: edu-user-sa
+  namespace: edu-user
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: edu-user
+  name: service-reader
+rules:
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get", "watch", "list"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-services
+  namespace: edu-user
+subjects:
+- kind: ServiceAccount
+  name: edu-user-sa
+  namespace: edu-user
+roleRef:
+  kind: Role
+  name: service-reader
+  apiGroup: rbac.authorization.k8s.io
