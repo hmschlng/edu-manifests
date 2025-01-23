@@ -13,6 +13,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: edu-user-service
+                name: edu-goods-service
                 port:
                   number: 80
