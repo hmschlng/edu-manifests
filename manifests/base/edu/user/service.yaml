@@ -5,7 +5,7 @@ metadata:
   namespace: edu-user
 spec:
   selector:
-    app: edu-user-prod
+    app: edu-user-app
     version: blue  # 기본적으로 Blue 배포에 연결
   ports:
     - protocol: TCP
